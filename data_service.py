@@ -83,3 +83,25 @@ def get_last_n_days(data, n=30):
         else:
             subset[key] = val
     return subset
+
+def get_top_movers():
+    companies = get_companies()
+    movers = []
+    for c in companies:
+        try:
+            data = fetch_data(c["symbol"], period="1y") 
+            latest_return = data["daily_return"][-1]
+            latest_close = data["close"][-1]
+            movers.append({
+                "symbol": c["symbol"].replace('.NS', ''),
+                "name": c["name"],
+                "daily_return": latest_return,
+                "latest_close": latest_close
+            })
+        except:
+            continue
+    movers.sort(key=lambda x: x["daily_return"], reverse=True)
+    return {
+        "gainers": [m for m in movers if m["daily_return"] > 0][:3],
+        "losers": [m for m in movers if m["daily_return"] < 0][::-1][:3]
+    }

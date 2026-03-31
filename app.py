@@ -70,5 +70,13 @@ async def api_compare(symbol1: str, symbol2: str, days: int = Query(30)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@app.get("/top-movers", tags=["Market Insights"])
+async def api_top_movers():
+    from data_service import get_top_movers
+    try:
+        return get_top_movers()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)

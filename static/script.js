@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             list.firstChild.classList.add("active");
             loadData(companies[0].symbol, 30);
         }
+        loadMovers();
     } catch (e) {
         document.getElementById("company-list").innerHTML = `<div class="p-3 text-danger"><small>Failed to load API.</small></div>`;
     }
@@ -192,4 +193,36 @@ function drawChart(labels, datasets) {
             }
         }
     });
+}
+
+async function loadMovers() {
+    try {
+        const res = await fetch("/top-movers");
+        const data = await res.json();
+        
+        const gList = document.getElementById("gainers-list");
+        const lList = document.getElementById("losers-list");
+        
+        if(data.gainers && data.gainers.length > 0) {
+            document.getElementById("movers-card").classList.remove("d-none");
+            data.gainers.forEach(g => {
+                gList.innerHTML += `<div class="list-group-item d-flex justify-content-between px-3 py-2 bg-light border-0 border-bottom">
+                    <span class="fw-bold small text-dark">${g.symbol}</span>
+                    <span class="small fw-bold text-success">+${g.daily_return}%</span>
+                </div>`;
+            });
+        }
+        
+        if(data.losers && data.losers.length > 0) {
+            document.getElementById("movers-card").classList.remove("d-none");
+            data.losers.forEach(l => {
+                lList.innerHTML += `<div class="list-group-item d-flex justify-content-between px-3 py-2 bg-light border-0 border-bottom">
+                    <span class="fw-bold small text-dark">${l.symbol}</span>
+                    <span class="small fw-bold text-danger">${l.daily_return}%</span>
+                </div>`;
+            });
+        }
+    } catch(e) {
+        console.error("Failed to load movers", e);
+    }
 }
