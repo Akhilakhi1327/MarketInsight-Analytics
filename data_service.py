@@ -105,3 +105,4 @@ def get_top_movers():
         "gainers": [m for m in movers if m["daily_return"] > 0][:3],
         "losers": [m for m in movers if m["daily_return"] < 0][::-1][:3]
     }
+ 

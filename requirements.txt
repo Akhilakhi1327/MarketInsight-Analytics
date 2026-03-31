@@ -4,3 +4,4 @@ pandas
 yfinance
 jinja2
 scikit-learn
+ 
