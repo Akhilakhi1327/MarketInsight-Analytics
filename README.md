@@ -1,103 +1,38 @@
-# 📊 Jarnox Fintech Analytics (MarketInsight) 🚀
+# Jarnox Fintech Analytics 📈
 
-Welcome to my submission for the Jarnox Fintech Internship Assignment! This project is a feature-rich real-time stock market data exploration and analytics application built to provide actionable financial insights through an intuitive UI and a robust REST API.
+Hey there! This is my submission for the Jarnox Fintech Internship assignment. I built a simple dashboard and REST API to fetch and analyze stock market data. I had a lot of fun putting this together and tried to include a few interesting extra features.
 
-## 🌟 Key Features & Highlights
+## What it does
 
-This project goes above and beyond the required specifications, fully implementing all required endpoints as well as the proposed bonus components to ensure a premium user experience and efficient logic.
+This project has a backend built with FastAPI and a clean vanilla JS dashboard on the frontend. 
 
-- **Real-Time API**: Powered by `FastAPI`, returning high-speed insights. Includes automatic OpenAPI/Swagger UI.
-- **Data Engineering**: Data fetching and transformation utilizing `yfinance`, `pandas`, and `numpy`. Cached for rapid repeated access.
-- **Actionable Metrics**: 7-Day Moving Average, 52-Week Highs/Lows, and structured JSON results for effortless client-side consumption.
-- **Custom Creativity Metrics (Bonus)**
-  - **Daily Top Movers**: Identifies and ranks daily Top Gainers and Losers on standard page load.
-  - **Machine Learning AI Prediction**: Applies scikit-learn Linear Regression to standard 30-day trailing datasets to anticipate the next closing price.
-  - **Volatility Score**: Calculates rolling standard deviation to determine risk associated with the specific asset.
-  - **Sentiment Momentum**: An experimental simulated sentiment scoring system that analyzes favorable returns to display market confidence.
-- **Comparison Engine**: Calculates relative percentage growth tracks the trajectory of two independent tickers.
-- **Frontend Dashboard**: Beautifully styled UI utilizing Vanilla JS, Bootstrap 5, and Chart.js.
+Features include:
+- **API Endpoints**: Fetching stock data, comparing two different stocks, and getting summaries like 52-week highs and lows.
+- **Top Movers**: At the top left of the dashboard, you can see today's top gainers and losers dynamically calculated across my tracked companies.
+- **Bonus Metrics**: I added a basic rolling 7-day moving average, a risk/volatility score, and a simple sentiment scoring logic.
+- **Next Day Prediction**: I implemented a basic scikit-learn Linear Regression model to guess tomorrow's closing price based on the last 30 days of data.
+- **Visualization**: An interactive line chart using Chart.js that toggles between different timeframes.
 
----
+## Tech Used
 
-## ⚙️ Tech Stack
+- **Python, FastAPI, Pandas, yfinance** (Backend & Data)
+- **HTML, Bootstrap 5, Chart.js** (Frontend)
+- **Docker** (For easy setup)
 
-- **Backend / API Wrapper**: Python 3, FastAPI, Uvicorn
-- **Data Processing & ML**: Pandas, NumPy, Scikit-learn
-- **Data Sourcing**: yfinance
-- **Frontend**: HTML5, Vanilla JavaScript, CSS3, Bootstrap 5
-- **Charts**: Chart.js
+## How to run it locally
 
----
+1. Clone this repository to your machine.
+2. Install the required Python packages:
+   `pip install -r requirements.txt`
+3. Start the FastAPI server:
+   `uvicorn app:app --reload`
+4. Open your browser and head to `http://localhost:8000` to see the dashboard.
+5. If you want to test the raw API endpoints, you can view the Swagger UI at `http://localhost:8000/docs`.
 
-## 🚀 Setup & Installation (Local Environment)
+## Docker Setup (Optional)
 
-Follow these steps to spin up the local project in less than a minute.
+If you prefer using Docker:
+1. Build it: `docker build -t jarnox-dashboard .`
+2. Run it: `docker run -p 8000:8000 jarnox-dashboard`
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Akhilakhi1327/MarketInsight-Analytics.git
-   cd MarketInsight-Analytics
-   ```
-
-2. **Setup your environment:**
-   *(Optional but recommended)* Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Launch the Server:**
-   ```bash
-   uvicorn app:app --host 0.0.0.0 --port 8000 --reload
-   ```
-
-5. **Explore:**
-   - **Main UI:** http://localhost:8000
-   - **Swagger Docs:** http://localhost:8000/docs
-   - **Redoc:** http://localhost:8000/redoc
-
----
-
-## 🐳 Docker Deployment (Optional Bonus)
-
-You can containerize the backend seamlessly utilizing the included Dockerfile.
-
-1. **Build the Image:**
-   ```bash
-   docker build -t jarnox-dashboard .
-   ```
-
-2. **Run the Container:**
-   ```bash
-   docker run -p 8000:8000 jarnox-dashboard
-   ```
-
----
-
-## 🌐 API Endpoint Reference
-
-| Endpoint | Method | Description |
-|---|---|---|
-| `/` | `GET` | HTML Web Dashboard Entry Point |
-| `/companies` | `GET` | Fetches a default array of supported active asset tickers. |
-| `/data/{symbol}?days=30` | `GET` | Retrieve the historical price action arrays (close, high, etc). |
-| `/summary/{symbol}` | `GET` | Returns an aggregate overview (52W H/L, Average). |
-| `/compare?symbol1=TCS.NS&symbol2=AAPL` | `GET` | Returns normalized comparison statistics over requested days. |
-| `/top-movers` | `GET` | Scans all configured assets and returns top gainers/losers dynamically. |
-
----
-
-## 💡 Evaluation Criteria Breakdown
-
-* **Python & Data Handling**: Implemented a comprehensive `data_service.py` to decouple business logic from API routing. All missing data paths handled gracefully. Standardized indexes explicitly configured.
-* **API Design**: True decoupled REST endpoints utilized via FastAPI, adhering rigidly to standard HTTP paradigms. Endpoints are decorated cleanly with accurate tagging.
-* **Creativity in Insights**: Aside from mapping 52W Highs and Lows efficiently, standard ML regression analysis is appended to the json packet predicting forward velocity.
-* **Visualization**: Interactive hover tooltips via `Chart.js`, dynamic responsive layouts adjusting between 30D/90D/1Y timeframes without requiring page reloading.
-
----
-*Created with ❤️ for Jarnox.*
+Thanks for taking the time to review my assignment! I learned a lot while building this and hope you enjoy using the dashboard.
